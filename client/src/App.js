@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Homepage from "./Components/HomePage.js";
 
 class App extends Component {
   state = {
@@ -29,6 +30,8 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
+          <Homepage />
+          <test />
         </header>
         <p className="App-intro">{this.state.data}</p>
       </div>
