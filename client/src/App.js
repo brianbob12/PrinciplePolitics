@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Homepage from "./Components/HomePage.js";
-
+import './CSS/App.css';
+import Navigator from './Components/Navigator';
 class App extends Component {
   state = {
-    data: null
-  };
+    data: "test test test"
+  }
 
   componentDidMount() {
     this.callBackendAPI()
@@ -27,11 +25,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+          crossorigin="anonymous"
+        />
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-          <Homepage />
-          <test />
+          <Navigator />
         </header>
         <p className="App-intro">{this.state.data}</p>
       </div>

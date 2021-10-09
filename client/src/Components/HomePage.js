@@ -1,12 +1,17 @@
-import React, { View, Text, h1 } from "react";
+import React from "react"
+import Button from "react-bootstrap/Button"
+import logo from '../logo.svg'
+import "../CSS/HomePage.css"
 
-export default () => {
+export default ({ onStartButton }) => {
 
   return (
     <div style={{
-
+      flex: 1
     }}>
-      <h1>hi</h1>
-    </div>
+      <img src={logo} className="App-logo" alt="logo" />
+      <h1 className="App-title">Welcome to React</h1>
+      <Button variant="primary" size="lg" onClick={onStartButton}>start</Button>
+    </div >
   )
 }
