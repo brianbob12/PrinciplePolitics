@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
-import './CSS/App.css';
-import Navigator from './Components/Navigator';
+import React, { Component } from 'react'
+import './CSS/App.css'
+import Navigator from './Components/Navigator'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 class App extends Component {
   state = {
     data: "test test test"
@@ -25,12 +28,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-          crossorigin="anonymous"
-        />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
         <header className="App-header">
           <Navigator />
         </header>
