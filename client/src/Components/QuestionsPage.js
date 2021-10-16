@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button"
 import Carousel from "react-bootstrap/Carousel"
 import Container from "react-bootstrap/Container"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import WindowDimensions from "../WindowDimensions"
 import Question from "./Question"
 import QuestionSummaryPage from "./QuestionSummaryPage"
@@ -9,7 +9,13 @@ import QuestionSummaryPage from "./QuestionSummaryPage"
 export default ({ onExit, onFinish }) => {
   const myWindow = WindowDimensions()
   const numberOfQuestions = 4
-  const questionScores = [0, 0, 0, 0]
+  const [questionScores, setQuestionScores] = useState([])
+  if (questionScores.length == 0) {
+    for (var i = 0; i < numberOfQuestions; i++) {
+      questionScores.push(0)
+    }
+  }
+
   const questions = [
     {
       name: "the first question",
@@ -27,21 +33,27 @@ export default ({ onExit, onFinish }) => {
   ]
 
   const listItems = []
+  const updatePageSliders = []
+  const updateSummarySliders = []
 
   for (var i = 0; i < numberOfQuestions; i++) {
+    updatePageSliders.push((value) => { console.log("no function here:" + value) })
     listItems.push(
       <Carousel.Item>
         <Question
+          passback={(functionToChange, index) => {
+            updatePageSliders[index] = functionToChange
+          }}
           question={questions[i]}
           number={i + 1}
-          onScoreChange={(score) => {
-            questionScores[i] = score
+          onScoreChange={(score, index) => {
+            questionScores[index] = score
+            updateSummarySliders[index](score)
           }}
         />
       </Carousel.Item>
     )
   }
-
   return (
     <div style={{ flex: 1, height: myWindow.height, width: myWindow.width - 17 }}>
       {/*the height and width given are always a little too big. The adjustment is made to avoid the scrooly bar*/}
@@ -64,7 +76,22 @@ export default ({ onExit, onFinish }) => {
             {listItems}
             <Carousel.Item>
               <QuestionSummaryPage
-                questions={questions} />
+                passback={(updateFunctions) => {
+                  //empty array without changing pointer
+                  updateSummarySliders.splice(0, numberOfQuestions)
+                  //this is done because I can't change the pointer for updateSummarySliders
+                  for (var i = 0; i < updateFunctions.length; i++) {
+                    updateSummarySliders.push(updateFunctions[i])
+                  }
+                }}
+                numberOfQuestions={numberOfQuestions}
+                questions={questions}
+                questionScores={questionScores}
+                onSliderChange={(value, index) => {
+                  questionScores[index] = value
+                  updatePageSliders[index](value)
+                }}
+              />
             </Carousel.Item>
           </Carousel>
         </Container >

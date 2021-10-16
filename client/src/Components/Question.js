@@ -7,9 +7,8 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import RangeSlider from "react-bootstrap-range-slider"
 import WindowDimensions from "../WindowDimensions"
-import { createBootstrapComponent } from "react-bootstrap/esm/ThemeProvider"
 
-export default ({ question, number, onScoreChange }) => {
+export default ({ passback, question, number, onScoreChange }) => {
   const myWindow = WindowDimensions()
 
   const [statement, setStatement] = useState("Perfectly Indifferent")
@@ -17,6 +16,48 @@ export default ({ question, number, onScoreChange }) => {
   const [sliderValue, setSliderValue] = useState(0)
 
   const [showModal, setShowModal] = useState(false)
+
+  const onValueChange = (value) => {
+    setSliderValue(value)
+    if (value < -75) {
+      setStatement("Strongly Disagree")
+      setSliderColor("#FF0000")
+    }
+    else if (value < -50) {
+      setStatement("Disagree")
+      setSliderColor("#FF0000")
+    }
+    else if (value < -25) {
+      setStatement("Slightly Disagree")
+      setSliderColor("#FF0000")
+    }
+    else if (value < 0) {
+      setStatement("Mostly Indifferent")
+      setSliderColor("#FF0000")
+    }
+    else if (value == 0) {
+      setStatement("Perfectly Indifferent")
+      setSliderColor("#FFFFFF")
+    }
+    else if (value < 25) {
+      setStatement("Mostly Indifferent")
+      setSliderColor("#00FF00")
+    }
+    else if (value < 50) {
+      setStatement("Slightly Agree")
+      setSliderColor("#00FF00")
+    }
+    else if (value < 75) {
+      setStatement("Agree")
+      setSliderColor("#00FF00")
+    }
+    else {
+      setStatement("Strongly Agree")
+      setSliderColor("#00FF00")
+    }
+  }
+
+  passback(onValueChange, number - 1)
 
   return (
     <Container>
@@ -45,6 +86,7 @@ export default ({ question, number, onScoreChange }) => {
           </Row>
           <Row>
             <RangeSlider
+              value={sliderValue}
               style={{
                 width: "100%"
               }}
@@ -52,46 +94,12 @@ export default ({ question, number, onScoreChange }) => {
               max={100}
               onChange={
                 (a, value) => {
-                  onScoreChange(value)
-                  setSliderValue(value)
-                  if (value < -75) {
-                    setStatement("Strongly Disagree")
-                    setSliderColor("#FF0000")
-                  }
-                  else if (value < -50) {
-                    setStatement("Disagree")
-                    setSliderColor("#FF0000")
-                  }
-                  else if (value < -25) {
-                    setStatement("Slightly Disagree")
-                    setSliderColor("#FF0000")
-                  }
-                  else if (value < 0) {
-                    setStatement("Mostly Indifferent")
-                    setSliderColor("#FF0000")
-                  }
-                  else if (value == 0) {
-                    setStatement("Perfectly Indifferent")
-                    setSliderColor("#FFFFFF")
-                  }
-                  else if (value < 25) {
-                    setStatement("Mostly Indifferent")
-                    setSliderColor("#00FF00")
-                  }
-                  else if (value < 50) {
-                    setStatement("Slightly Agree")
-                    setSliderColor("#00FF00")
-                  }
-                  else if (value < 75) {
-                    setStatement("Agree")
-                    setSliderColor("#00FF00")
-                  }
-                  else {
-                    setStatement("Strongly Agree")
-                    setSliderColor("#00FF00")
-                  }
+                  onValueChange(value)
+                  onScoreChange(value, number - 1)
                 }
+
               }
+              tooltip="off"
             />
           </Row>
           <Row>
