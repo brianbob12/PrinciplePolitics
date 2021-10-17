@@ -6,9 +6,20 @@ import WindowDimensions from "../WindowDimensions"
 import Question from "./Question"
 import QuestionSummaryPage from "./QuestionSummaryPage"
 
+const submitScores = (scores) => {
+  //do stuff
+}
+
 export default ({ onExit, onFinish }) => {
+
   const myWindow = WindowDimensions()
   const numberOfQuestions = 4
+
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const handleSelect = (selectedIndex, e) => {
+    setCarouselIndex(selectedIndex)
+  }
+
   const [questionScores, setQuestionScores] = useState([])
   if (questionScores.length == 0) {
     for (var i = 0; i < numberOfQuestions; i++) {
@@ -68,6 +79,8 @@ export default ({ onExit, onFinish }) => {
       >
         <Container fluid>
           <Carousel
+            activeIndex={carouselIndex}
+            onSelect={handleSelect}
             variant="dark"
             controls={true}
             indicators={true}
@@ -91,6 +104,10 @@ export default ({ onExit, onFinish }) => {
                   questionScores[index] = value
                   updatePageSliders[index](value)
                 }}
+                onReturnButton={(index) => {
+                  setCarouselIndex(index)
+                }}
+                onSubmitButton={submitScores(questionScores)}
               />
             </Carousel.Item>
           </Carousel>

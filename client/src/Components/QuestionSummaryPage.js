@@ -4,7 +4,7 @@ import RangeSlider from "react-bootstrap-range-slider"
 import WindowDimensions from "../WindowDimensions"
 
 //passback is a funtion that returns a funtion to parent component
-const QuestionView = (passback, index, onScoreChange, question, questionScore) => {
+const QuestionView = (passback, index, onScoreChange, question, questionScore, onReturnButton) => {
 
   const [statement, setStatement] = useState("Perfectly Indifferent")
   const [sliderColor, setSliderColor] = useState("#FFFFFF")
@@ -57,7 +57,9 @@ const QuestionView = (passback, index, onScoreChange, question, questionScore) =
       >
         <Button
           variant="secondary"
-          onClick={() => { }}
+          onClick={() => {
+            onReturnButton(index)
+          }}
         >Return</Button>
       </Col>
       <Col
@@ -91,7 +93,8 @@ const QuestionView = (passback, index, onScoreChange, question, questionScore) =
   )
 }
 
-export default ({ passback, numberOfQuestions, questions, questionScores, onSliderChange }) => {
+//onReturnButton needs index as an argument
+export default ({ passback, numberOfQuestions, questions, questionScores, onSliderChange, onReturnButton, onSubmitButton }) => {
   const myWindow = WindowDimensions()
   const listItems = []
   const updateSummarySliders = []
@@ -106,7 +109,8 @@ export default ({ passback, numberOfQuestions, questions, questionScores, onSlid
       i,
       (value, index) => { onSliderChange(value, index) },
       questions[i],
-      questionScores[i]
+      questionScores[i],
+      onReturnButton
     ))
   }
   return (
@@ -115,23 +119,31 @@ export default ({ passback, numberOfQuestions, questions, questionScores, onSlid
       style={{
         padding: "10%",
         paddingLeft: "15%",
-        height: myWindow.height * 0.7
+        height: myWindow.height * 0.7,
       }}
     >
-      <Row>
-        <h1>Questions Summary</h1>
-      </Row>
-      {listItems}
-      <Row>
-        <Container
-        >
-          <Button
-            size="lg"
-            variant="success"
-            onClick={() => { }}
-          >Submit</Button>
-        </Container>
-      </Row>
+      <Container
+        style={{
+          height: "100%",
+          width: "100%",
+          overflowY: "scroll"
+        }}
+      >
+        <Row>
+          <h1>Questions Summary</h1>
+        </Row>
+        {listItems}
+        <Row>
+          <Container
+          >
+            <Button
+              size="lg"
+              variant="success"
+              onClick={onSubmitButton}
+            >Submit</Button>
+          </Container>
+        </Row>
+      </Container>
     </Container >
   )
 }
