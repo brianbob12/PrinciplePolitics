@@ -6,8 +6,10 @@ import WindowDimensions from "../WindowDimensions"
 import Question from "./Question"
 import QuestionSummaryPage from "./QuestionSummaryPage"
 
-const submitScores = (scores) => {
+const submitScores = (surveyData, scores) => {
   //do stuff
+  console.log(surveyData)
+  console.log(scores)
 }
 
 export default ({ onExit, onFinish }) => {
@@ -107,7 +109,9 @@ export default ({ onExit, onFinish }) => {
                 onReturnButton={(index) => {
                   setCarouselIndex(index)
                 }}
-                onSubmitButton={submitScores(questionScores)}
+                onSubmit={(surveyData) => {
+                  submitScores(surveyData, questionScores)
+                }}
               />
             </Carousel.Item>
           </Carousel>
