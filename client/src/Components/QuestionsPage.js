@@ -1,15 +1,28 @@
 import Button from "react-bootstrap/Button"
 import Carousel from "react-bootstrap/Carousel"
 import Container from "react-bootstrap/Container"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import WindowDimensions from "../WindowDimensions"
 import Question from "./Question"
 import QuestionSummaryPage from "./QuestionSummaryPage"
 
-const submitScores = (surveyData, scores) => {
+const submitScores = (surveyData, scores, onFinish) => {
   //do stuff
   console.log(surveyData)
   console.log(scores)
+  const submitTime = (new Date()).getTime()
+  console.log(submitTime)
+  const requestOptions = {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      scores: scores,
+      surveyData: surveyData
+    })
+  }
+  fetch("/submitData", requestOptions).then((res) => {
+    res.json().then((value) => { console.log(value) })
+  })
 }
 
 export default ({ onExit, onFinish }) => {
@@ -110,7 +123,7 @@ export default ({ onExit, onFinish }) => {
                   setCarouselIndex(index)
                 }}
                 onSubmit={(surveyData) => {
-                  submitScores(surveyData, questionScores)
+                  submitScores(surveyData, questionScores, onFinish)
                 }}
               />
             </Carousel.Item>

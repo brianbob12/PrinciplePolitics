@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends Component {
   state = {
-    data: "test test test"
+    data: "something's gone wrong"
   }
 
   componentDidMount() {
