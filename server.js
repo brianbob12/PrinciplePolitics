@@ -38,8 +38,7 @@ app.get('/express_backend', (req, res) => {
 })
 
 app.post("/submitData", (req, res) => {
-  console.log(req.body)
-
+  console.log("Scores Submitted")
 
   //TODO properly determine id
   const id = idCount

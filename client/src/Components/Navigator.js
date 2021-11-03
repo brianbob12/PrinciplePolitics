@@ -6,28 +6,41 @@ import LoadingPage from "./LoadingPage"
 import SummaryPage from "./SummaryPage"
 
 export default () => {
-  const myHomePage =
+  // persistent page
+  const [myHomePage, setMyHomePage] = useState(
     <HomePage
       onStartButton={() => { setCurrentPage(myQuestionsPage) }}
+      //TODO remove this
+      onDEBUG={() => {
+        const mySummaryPage =
+          <SummaryPage
+            data={{
+              pending: true,
+              phase: 0,
+              pcs: [null, null, null, null, null, null, null, null]
+            }}
+          />
+        setCurrentPage(mySummaryPage)
+      }}
     />
-  const myQuestionsPage =
+  )
+  //persistent page
+  const [myQuestionsPage, setMyQuestionPage] = useState(
     <QuestionsPage
       onExit={() => { setCurrentPage(myHomePage) }}
       onStartLoading={() => { setCurrentPage(myLoadingPage) }}
       onFinish={(data) => {
-        setReturnedData(data)
+        const mySummaryPage =
+          <SummaryPage
+            data={data}
+          />
         setCurrentPage(mySummaryPage)
       }}
-    />
+    />)
   const myLoadingPage =
     <LoadingPage
     />
-  //data returned from server
-  const [returnedData, setReturnedData] = useState(null)
-  const mySummaryPage =
-    <SummaryPage
-      data={returnedData}
-    />
+
 
   const [currentPage, setCurrentPage] = useState(myHomePage)
   return (
