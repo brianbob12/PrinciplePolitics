@@ -45,7 +45,7 @@ app.post("/submitData", (req, res) => {
   const id = idCount
   idCount += 1
 
-  //TODO process data
+  //TODO fix all zeros gettting NAN 
   var n = req.body.scores.length
   var total = 0
   var squaredTotal = 0
@@ -64,7 +64,8 @@ app.post("/submitData", (req, res) => {
   //TODO return PCs
   res.send({
     pending: true,
-    phase: 0
+    phase: 0,
+    pcs: [null, null, null, null, null, null, null, null]
   })
 
   const rawResponsesData = [id].concat(req.body.scores)

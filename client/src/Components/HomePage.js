@@ -11,7 +11,7 @@ export default ({ onStartButton }) => {
     }}>
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Welcome to React</h1>
-      <Button variant="primary" size="lg" onClick={onStartButton}>start</Button>
+      <Button variant="info" size="lg" onClick={onStartButton}>start</Button>
     </div >
   )
 }
