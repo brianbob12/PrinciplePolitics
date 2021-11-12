@@ -1,17 +1,28 @@
 import React from "react"
 import Button from "react-bootstrap/Button"
+import Container from "react-bootstrap/Container"
 import logo from '../logo.svg'
 import "../CSS/HomePage.css"
+import Graph from "./Graph"
+import WindowDimensions from "../WindowDimensions"
 
-export default ({ onStartButton }) => {
+export default ({ onStartButton, onDEBUG }) => {
+
+  const myWindow = WindowDimensions()
 
   return (
     <div style={{
       flex: 1
     }}>
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">Welcome to React</h1>
-      <Button variant="primary" size="lg" onClick={onStartButton}>start</Button>
+      <h1 className="App-title">Principle Politics</h1>
+      <Container style={{ padding: "10%" }}>
+        <Graph
+          size={myWindow.height * 0.3}
+        />
+      </Container>
+      <Button variant="info" size="lg" onClick={onStartButton}>Start</Button>
+      <Button size="lg" onClick={onDEBUG}>DEBUG-SP</Button>
+      <p>Text text text text text text</p>
     </div >
   )
 }

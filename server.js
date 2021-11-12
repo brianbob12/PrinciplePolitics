@@ -38,14 +38,13 @@ app.get('/express_backend', (req, res) => {
 })
 
 app.post("/submitData", (req, res) => {
-  console.log(req.body)
-
+  console.log("Scores Submitted")
 
   //TODO properly determine id
   const id = idCount
   idCount += 1
 
-  //TODO process data
+  //TODO fix all zeros gettting NAN 
   var n = req.body.scores.length
   var total = 0
   var squaredTotal = 0
@@ -57,14 +56,15 @@ app.post("/submitData", (req, res) => {
   const average = total / n
   const stdDev = Math.sqrt((squaredTotal / n) - average ** 2)
   for (var i = 0; i < n; i++) {
-    processedScores.push((req.body.scores[i] - average) / stdDev)
+    processedScores.push(req.body.scores[i] / stdDev)
   }
 
   //TODO calculate PCs
   //TODO return PCs
   res.send({
     pending: true,
-    phase: 0
+    phase: 0,
+    pcs: [null, null, null, null, null, null, null, null]
   })
 
   const rawResponsesData = [id].concat(req.body.scores)

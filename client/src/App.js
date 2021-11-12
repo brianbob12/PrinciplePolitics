@@ -13,6 +13,7 @@ class App extends Component {
     this.callBackendAPI()
       .then(res => this.setState({ data: res.express }))
       .catch(err => console.log(err));
+    document.title = "Principle Politics"
   }
   // fetching the GET route from the Express server which matches the GET route from server.js
   callBackendAPI = async () => {
@@ -32,7 +33,6 @@ class App extends Component {
         <header className="App-header">
           <Navigator />
         </header>
-        <p className="App-intro">{this.state.data}</p>
       </div>
     );
   }

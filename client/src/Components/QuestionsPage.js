@@ -6,26 +6,27 @@ import WindowDimensions from "../WindowDimensions"
 import Question from "./Question"
 import QuestionSummaryPage from "./QuestionSummaryPage"
 
-const submitScores = (surveyData, scores, onFinish) => {
+const submitScores = (surveyData, scores, onStartLoading, onFinish) => {
   //do stuff
-  console.log(surveyData)
-  console.log(scores)
   const submitTime = (new Date()).getTime()
-  console.log(submitTime)
   const requestOptions = {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       scores: scores,
-      surveyData: surveyData
+      surveyData: surveyData,
+      submitTime: submitTime
     })
   }
   fetch("/submitData", requestOptions).then((res) => {
-    res.json().then((value) => { console.log(value) })
+    res.json().then((value) => {
+      onFinish(value)
+    })
   })
+  onStartLoading()
 }
 
-export default ({ onExit, onFinish }) => {
+export default ({ onExit, onStartLoading, onFinish }) => {
 
   const myWindow = WindowDimensions()
   const numberOfQuestions = 4
@@ -123,7 +124,7 @@ export default ({ onExit, onFinish }) => {
                   setCarouselIndex(index)
                 }}
                 onSubmit={(surveyData) => {
-                  submitScores(surveyData, questionScores, onFinish)
+                  submitScores(surveyData, questionScores, onStartLoading, onFinish)
                 }}
               />
             </Carousel.Item>
@@ -131,7 +132,10 @@ export default ({ onExit, onFinish }) => {
         </Container >
         <div style={{ flex: 2 }}>
           <h1>questionsPages</h1>
-          <Button onClick={onExit}>Exit</Button>
+          <Button
+            variant="info"
+            onClick={onExit}
+          >Exit</Button>
         </div>
       </div >
     </div >
