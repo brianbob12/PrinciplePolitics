@@ -56,7 +56,7 @@ app.post("/submitData", (req, res) => {
   const average = total / n
   const stdDev = Math.sqrt((squaredTotal / n) - average ** 2)
   for (var i = 0; i < n; i++) {
-    processedScores.push((req.body.scores[i] - average) / stdDev)
+    processedScores.push(req.body.scores[i] / stdDev)
   }
 
   //TODO calculate PCs
