@@ -18,6 +18,19 @@ export default ({ onStartButton, onDEBUG }) => {
       <Container style={{ padding: "10%" }}>
         <Graph
           size={myWindow.height * 0.3}
+          points={
+            [
+              { x: 0, y: 0 },
+              { x: 0, y: 1 },
+              { x: 0, y: -1 },
+              { x: 1, y: 0 },
+              { x: 1, y: 1 },
+              { x: 1, y: -1 },
+              { x: -1, y: 0 },
+              { x: -1, y: 1 },
+              { x: -1, y: -1 },
+            ]
+          }
         />
       </Container>
       <Button variant="info" size="lg" onClick={onStartButton}>Start</Button>
