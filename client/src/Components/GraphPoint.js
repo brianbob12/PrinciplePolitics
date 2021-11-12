@@ -14,8 +14,8 @@ export default ({ x, y, graphSize, color }) => {
         backgroundColor: color,
         borderRadius: graphSize * mainPointSize * 0.5,
         position: "absolute",
-        top: graphSize * (x - mainPointSize * 0.5),
-        left: graphSize * (y - mainPointSize * 0.5)
+        top: graphSize * (x * 0.5 + 0.5 - mainPointSize * 0.5),
+        left: graphSize * (y * 0.5 + 0.5 - mainPointSize * 0.5)
       }}
       onMouseEnter={() => { setHover(true) }}
       onMouseLeave={() => { setHover(false) }}
